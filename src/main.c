@@ -66,7 +66,6 @@ static void main_window_unload(Window *window) {
     fonts_unload_custom_font(s_time_font);
     // Destroy GBitmap
     gbitmap_destroy(s_background_bitmap);
-
     // Destroy BitmapLayer
     bitmap_layer_destroy(s_background_layer);
 }
