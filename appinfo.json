@@ -9,6 +9,11 @@
     "resources": {
         "media": [
             {
+                "file": "images/background.png",
+                "name": "IMAGE_BACKGROUND",
+                "type": "png"
+            },
+            {
                 "file": "fonts/Perfect DOS VGA 437.ttf",
                 "name": "FONT_PERFECT_DOS_48",
                 "type": "font"
