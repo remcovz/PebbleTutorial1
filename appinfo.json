@@ -9,21 +9,26 @@
     "resources": {
         "media": [
             {
-                "file": "images/background.png",
-                "name": "IMAGE_BACKGROUND",
-                "type": "png"
+                "file": "fonts/Perfect DOS VGA 437.ttf",
+                "name": "FONT_PERFECT_DOS_24",
+                "type": "font"
             },
             {
                 "file": "fonts/Perfect DOS VGA 437.ttf",
                 "name": "FONT_PERFECT_DOS_48",
                 "type": "font"
+            },
+            {
+                "file": "images/background.png",
+                "name": "IMAGE_BACKGROUND",
+                "type": "png"
             }
         ]
     },
     "shortName": "Tutorial 1",
     "uuid": "0fd0f164-06f0-4fe5-a4ba-014db9fd5a5d",
     "versionCode": 1,
-    "versionLabel": "0.1",
+    "versionLabel": "0.4",
     "watchapp": {
         "watchface": true
     }
