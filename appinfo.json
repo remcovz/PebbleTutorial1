@@ -10,12 +10,17 @@
         "media": [
             {
                 "file": "fonts/Perfect DOS VGA 437.ttf",
-                "name": "FONT_PERFECT_DOS_24",
+                "name": "FONT_PERFECT_DOS_20",
                 "type": "font"
             },
             {
                 "file": "fonts/Perfect DOS VGA 437.ttf",
                 "name": "FONT_PERFECT_DOS_48",
+                "type": "font"
+            },
+            {
+                "file": "fonts/Perfect DOS VGA 437.ttf",
+                "name": "FONT_PERFECT_DOS_24",
                 "type": "font"
             },
             {
