@@ -19,11 +19,6 @@
                 "type": "font"
             },
             {
-                "file": "fonts/Perfect DOS VGA 437.ttf",
-                "name": "FONT_PERFECT_DOS_24",
-                "type": "font"
-            },
-            {
                 "file": "images/background.png",
                 "name": "IMAGE_BACKGROUND",
                 "type": "png"
