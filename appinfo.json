@@ -12,6 +12,12 @@
     "resources": {
         "media": [
             {
+                "file": "images/screenshot.png",
+                "menuIcon": true,
+                "name": "IMAGE_SCREENSHOT",
+                "type": "png"
+            },
+            {
                 "file": "fonts/Perfect DOS VGA 437.ttf",
                 "name": "FONT_PERFECT_DOS_20",
                 "type": "font"
