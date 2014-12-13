@@ -16,6 +16,30 @@ Pebble.addEventListener('appmessage',
   }                     
 );
 
+var options = {};
+Pebble.addEventListener('showConfiguration', 
+  function(e) {
+    // Show config page
+    console.log('Configuration window opened');
+    Pebble.openURL('https://www.zuijlen.eu/pebble/tutorial1.html?'+encodeURIComponent(JSON.stringify(options)));
+  }
+);
+
+var tempscale = 'celcius';
+Pebble.addEventListener("webviewclosed", function(e) {
+  console.log('Configuration window closed and returned: ' + e.response);
+  // webview closed
+  //Using primitive JSON validity and non-empty check
+  if (e.response.charAt(0) == "{" && e.response.slice(-1) == "}" && e.response.length > 5) {
+    options = JSON.parse(decodeURIComponent(e.response));
+    //console.log("Configuration stringified: " + JSON.stringify(options));
+    var tempscale = options.scale;
+    console.log('Temperature Scale setting = '+tempscale);
+  } else {
+    console.log("Configuration cancelled");
+  }
+});
+
 var xhrRequest = function (url, type, callback) {
   var xhr = new XMLHttpRequest();
   xhr.onload = function () {
@@ -48,7 +72,8 @@ function locationSuccess(pos) {
 
       var dictionary = {
         "KEY_TEMPERATURE": temperature,
-        "KEY_CONDITIONS": conditions
+        "KEY_CONDITIONS": conditions,
+        "KEY_TEMPSCALE": tempscale
       };
       
       // Send to Pebble
@@ -60,6 +85,17 @@ function locationSuccess(pos) {
           console.log("Error sending weather info to Pebble!");
         }
       );   
+    }
+  );
+}
+
+function sendAppMessage(dictionary) {
+  Pebble.sendAppMessage(dictionary, 
+    function(e) {
+      console.log("Weather info sent to Pebble successfully!");
+    },
+    function(e) {
+      console.log("Error sending weather info to Pebble!");
     }
   );
 }

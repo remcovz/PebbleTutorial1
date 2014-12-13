@@ -2,6 +2,7 @@
 
 #define KEY_TEMPERATURE 0
 #define KEY_CONDITIONS 1
+#define KEY_TEMPSCALE 2
   
 static Window *s_main_window;
 static TextLayer *s_time_layer;
@@ -108,6 +109,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   static char temperature_buffer[8];
   static char conditions_buffer[32];
   static char weather_layer_buffer[32];
+  static char tempscale_buffer[16];
 
   // Read first item
   Tuple *t = dict_read_first(iterator);
@@ -121,6 +123,10 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
       break;
     case KEY_CONDITIONS:
       snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", t->value->cstring);
+      break;
+    case KEY_TEMPSCALE:
+      snprintf(tempscale_buffer, sizeof(tempscale_buffer), "%s", t->value->cstring);
+      APP_LOG(APP_LOG_LEVEL_INFO, "Tempscale = %s", tempscale_buffer);
       break;
     default:
       APP_LOG(APP_LOG_LEVEL_ERROR, "Key %d not recognized!", (int)t->key);
