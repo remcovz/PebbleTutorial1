@@ -40,6 +40,7 @@ static void update_time() {
 
     // Add a key-value pair
     dict_write_uint8(iter, 0, 0);
+    dict_write_uint8(iter, 1, 1);
 
     // Send the message!
     app_message_outbox_send();
@@ -110,7 +111,7 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
   static char conditions_buffer[32];
   static char weather_layer_buffer[32];
   static char tempscale_buffer[16];
-
+/*
   // Read first item
   Tuple *t = dict_read_first(iterator);
 
@@ -126,20 +127,40 @@ static void inbox_received_callback(DictionaryIterator *iterator, void *context)
       break;
     case KEY_TEMPSCALE:
       snprintf(tempscale_buffer, sizeof(tempscale_buffer), "%s", t->value->cstring);
-      APP_LOG(APP_LOG_LEVEL_INFO, "Tempscale = %s", tempscale_buffer);
+      APP_LOG(APP_LOG_LEVEL_DEBUG, "Tempscale = %s", tempscale_buffer);
+      persist_write_string(KEY_TEMPSCALE, tempscale_buffer);
       break;
     default:
       APP_LOG(APP_LOG_LEVEL_ERROR, "Key %d not recognized!", (int)t->key);
       break;
     }
-    
+*/
+    // Read tuples for data
+    Tuple *temp_tuple = dict_find(iterator, KEY_TEMPERATURE);
+    Tuple *conditions_tuple = dict_find(iterator, KEY_CONDITIONS);
+    //Tuple *scale_tuple = dict_find(iterator, KEY_TEMPSCALE);
+  
+    if (dict_find(iterator, KEY_TEMPSCALE)) {
+      Tuple *scale_tuple = dict_find(iterator, KEY_TEMPSCALE);
+      snprintf(tempscale_buffer, sizeof(tempscale_buffer), "%s", scale_tuple->value->cstring);
+      
+      APP_LOG(APP_LOG_LEVEL_DEBUG, "Tempscale = %s", tempscale_buffer);
+      persist_write_string(KEY_TEMPSCALE, tempscale_buffer);
+    }
+
+    // If all data is available, use it
+    if(temp_tuple && conditions_tuple) {
+       snprintf(temperature_buffer, sizeof(temperature_buffer), "%dC", (int)temp_tuple->value->int32);
+       snprintf(conditions_buffer, sizeof(conditions_buffer), "%s", conditions_tuple->value->cstring);
+    }
+  
     // Assemble full string and display
     snprintf(weather_layer_buffer, sizeof(weather_layer_buffer), "%s, %s", temperature_buffer, conditions_buffer);
     text_layer_set_text(s_weather_layer, weather_layer_buffer);
     
     // Look for next item
-    t = dict_read_next(iterator);
-  }
+    //t = dict_read_next(iterator);
+  //}
 }
 
 static void inbox_dropped_callback(AppMessageResult reason, void *context) {
